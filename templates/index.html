@@ -10,53 +10,70 @@
     <link rel="stylesheet" href={{ url_for('static', filename="css/bootstrap.css")}}>
     <link rel="stylesheet" href={{ url_for('static', filename="css/floating-labels.css")}}>
 
-    <title>Basic Form Validation</title>
+    <title>Dojo Survey with validation</title>
 </head>
 
 <body>
-    <form class="form-signin" action="/process" method="POST">
-        <!-- <div class="text-center mb-4">
-            <img class="mb-4" 
-                 src={{ url_for('static', filename="img/bootstrap-solid.svg")}} 
-                 alt="" 
-                 width="72"
-                 height="72">
-            <h1 class="h3 mb-3 font-weight-normal">Floating labels</h1>
+    <form class="form-signin" action="/submit" method="POST">
+        <!-- <div class="text-center mb-4"> -->
+        <div class="text-left mb-4">
+            <h1 class="h3 mb-3 font-weight-normal">Dojo Survey with Validation</h1>
             <p>Build form controls with floating labels via the <code>:placeholder-shown</code> pseudo-element. <a
                     href="https://caniuse.com/#feat=css-placeholder-shown">Works in latest Chrome, Safari, and
                     Firefox.</a></p>
-        </div> -->
-        <!-- <h3>Enter a Valid(Any) Email!</h3>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-      {% for message in messages %}
-        <p>{{message}}</p>
-      {% endfor %}
-    {% endif %}
-  {% endwith %} -->
-
-        <div class="form-label-group">
-            <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <label for="inputEmail">Email address</label>
-        </div>
-        
-        <div class="form-label-group">
-            <input type="text" id="inputName" name="name" class="form-control" placeholder="Name" required autofocus>
-            <label for="inputName">Name </label>
-        </div>
-        
-        <div class="form-label-group">
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-            <label for="inputPassword">Password</label>
         </div>
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
+        <div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                  {% for message in messages %}
+                    <p>{{message}}</p>
+                  {% endfor %}
+                {% endif %}
+            {% endwith %}
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <!-- <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2019</p> -->
+
+      
+
+        {% if 'name' in session %}
+            <div class="form-group">
+                <!-- <input id="inputName" name="name" class="form-control" type="text" placeholder="Your Name" required autofocus> -->
+                <input id="inputName" name="name" class="form-control" type="text" value="{{ session['name'] }}"  autofocus>
+            </div>
+        {% else %}
+             <div class="form-label-group">
+                <!-- <input id="inputName" name="name" class="form-control" type="text" placeholder="Your Name" required autofocus> -->
+                <input id="inputName" name="name" class="form-control" type="text" placeholder="Your Name"  autofocus>
+                <label for="inputName">Your Name</label>
+            </div>
+        {% endif %}
+
+        <div class="form-label-group">
+            <select class="custom-select" name="location">
+                    <!-- <option selected>Location</option> -->
+                    <option value="San Jose">San Jose</option>
+                    <option value="Dallas">Dallas</option>
+                    <option value="Seattle">Seattle</option>
+            </select>
+        </div>
+
+        <div class="form-label-group">
+                <select class="custom-select" name="language" id="inputGroupSelect04" aria-label="Example select with button addon">
+                    <!-- <option selected>Languages</option> -->
+                    <option value="Python">Python</option>
+                    <option value="Javascript">Javascript</option>
+                    <option value="Java">Java</option>
+                </select>
+        </div>
+
+        <label for="textareaComment">Comment (required):</label>
+        <div class="form-label-group">
+            <textarea class="form-control" name="comment" id="textareaComment" cols="30" rows="10"></textarea>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary d-flex">Submit</button>
+        </div>
+      
     </form>
 
     <!-- Optional JavaScript -->
